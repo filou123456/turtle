@@ -25,13 +25,21 @@ class Lidar:
 
         scan = ydlidar.LaserScan()
 
-        if not self.lidar.initialize():
-            print
-        elif not self.lidar.turnOn():
-            print
-
 
 
 
     def demarrer_scan(self):
-        print()
+        if not self.lidar.initialize():
+            raise Exception("Erreur initialize")
+        
+        if not self.lidar.turnOn():
+            raise Exception("Erreur turnOn")
+
+    def arreter_scan(self):
+        self.lidar.turnOff()
+
+    def lire_donnees(self):
+        if self.lidar.doProcessSimple(self.scan) and len(self.scan.points) > 0:
+            return self.scan.points
+
+        return []

@@ -13,11 +13,13 @@ class Projecteur:
         y = range*math.cos(angle)
         self.points.append((x,y))
         return (x,y) #Si on a besoin d'avoir les coords
+    
     def mettreAEchelle(self):
         for x,y in self.points:
             xImage = CENTRE_LARGEUR + x * ECHELLE
             yImage = CENTRE_HAUTEUR + y * ECHELLE
             self.pointsImage((xImage,yImage))
+            
     def projeter(self,tabVecteur):#
         for range,angle in tabVecteur:
             self.calculerCordPolaire(angle,range)
