@@ -46,6 +46,7 @@ class Lidar:
 
 
 lidar = Lidar(PORT, BAUD, LIDAR_TYPE, SAMPLE_RATE, SCAN_FREQ, SINGLE_CHANNEL)
+lidar.turnOn()
 projecteur = Projecteur()
 
 lidar.demarrer_scan()

@@ -18,10 +18,10 @@ class Projecteur:
                      
     def projeter(self,tabVecteur):
         image = np.zeros((TAILLE_HAUTEUR, TAILLE_LARGEUR, 3),np.uint8)
-        for range,angle in tabVecteur:
-            x,y = self.calculerCordPolaire(angle,range) 
+        for point in tabVecteur:
+            x,y = self.calculerCordPolaire(point.angle,point.range) 
             xImage,yImage = self.mettreAEchelle(x,y)    
-            if (range < 0.50 and range > 0.10 and abs(math.degrees(angle)) > 10):
+            if (point.range < 0.50 and point.range > 0.10 and abs(math.degrees(point.angle)) > 170):
                 cv2.circle(image, (xImage,yImage), 5, (0, 0, 255), -1)
             else:
                 cv2.circle(image, (xImage,yImage), 5, (0, 255, 0), -1)
