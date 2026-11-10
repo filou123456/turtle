@@ -5,6 +5,7 @@ SAMPLE_RATE = 8
 SCAN_FREQ = 7.0
 SINGLE_CHANNEL = False
 LIDAR_TYPE = ydlidar.TYPE_TRIANGLE
+from projecteur import *
 
 
 class Lidar:
@@ -23,8 +24,7 @@ class Lidar:
         self.lidar.setlidaropt(ydlidar.LidarPropScanFrequency, SCAN_FREQ)
         self.lidar.setlidaropt(ydlidar.LidarPropSingleChannel, SINGLE_CHANNEL)
 
-        scan = ydlidar.LaserScan()
-
+        self.scan = ydlidar.LaserScan()
 
 
 
@@ -43,3 +43,17 @@ class Lidar:
             return self.scan.points
 
         return []
+
+
+lidar = Lidar(PORT, BAUD, LIDAR_TYPE, SAMPLE_RATE, SCAN_FREQ, SINGLE_CHANNEL)
+projecteur = Projecteur()
+
+lidar.demarrer_scan()
+
+try:
+    while True:
+        points = lidar.lire_donnees()
+        projecteur.projeter(points)
+
+finally:
+    lidar.arreter_scan()
