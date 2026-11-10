@@ -17,7 +17,7 @@ class Projecteur:
         return (int(xImage),int(yImage))
                      
     def projeter(self,tabVecteur):
-
+        image = np.zeros((TAILLE_HAUTEUR, TAILLE_LARGEUR, 3),np.uint8)
         for range,angle in tabVecteur:
             x,y = self.calculerCordPolaire(angle,range) 
             xImage,yImage = self.mettreAEchelle(x,y)    
