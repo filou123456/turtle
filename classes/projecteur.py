@@ -1,5 +1,5 @@
 import math
-from params import *
+from param import *
 import numpy as np
 import cv2
 class Projecteur:
