@@ -18,24 +18,29 @@ message = ""
 vitesse = VITESSEINITIAL
 while not stop_event.is_set():
     key = cv2.waitKeyEx(0) # 0: bloque l'exécution
-
+    
+        
+        
     #Commandes possibles
-    if key==ord('w'):
+    if key==ord('q'):
         message = "Avancer"
         action = MSG_AVANCER
         
 
-    if key==ord('e'):
+    if key==ord('s'):
         message = "Tourner à droite"
         action = MSG_PIVOTER_D
 
-    if key==ord('q'):
+    if key==ord('w'):
         message = "Tourner à gauche"
         action = MSG_PIVOTER_G
 
-    if key==ord('s'):
+    if key==ord('e'):
         message = "Reculer"
         action = MSG_RECULER
+    if key==ord('p'):
+        message = "Capture"
+        action = MSG_CAPTURER
 
     if key==ord('.'):
         message = "Accélération"
@@ -63,4 +68,4 @@ while not stop_event.is_set():
         print(f"Voilà")
     if (action != 0):
         print(f"{message}")
-        gen_ev_externe("192.168.137.135", APP_CTRL_ROBOT, action, vitesse)
+        gen_ev_externe(IP, APP_CTRL_ROBOT, action, vitesse)

@@ -8,8 +8,9 @@ import threading
 from moteur import Moteur
 from robot import Robot
 import time
+from datetime import datetime
 import math
-from IMU import IMU
+import cv2
 from ev_app_client_api import gen_ev_externe
 from param import *
 
@@ -19,15 +20,15 @@ class CtrlRobot(EvApp):
     moteurGauche = Moteur(6,5,13)
     moteurDroite = Moteur(15,14,18)
     vitesse = VITESSEINITIAL
-    TMO = INTERVALLE_IMU
-
+    camera = Camera(640,480)
     robot = Robot(moteurGauche, moteurDroite,VITESSEINITIAL) #Envoie la vitesse initital
 
     def __init__(self, port_no):
-        super().__init__(port_no,tmo=CtrlRobot.TMO)
-        self.imu = IMU()
+        super().__init__(port_no)
+
         self.est_actif = False
         self.dernier_echantillonnage = time.monotonic()
+        self.camera.demarrer()
 
 
     def dispatch_event(self, ev):
@@ -43,7 +44,7 @@ class CtrlRobot(EvApp):
             if ev.type == MSG_AVANCER:
                 print(f"avancer robot :")
                 self.robot.avancer(vitesse)
-                angle_rot, dist_y = self.imu.obtenir_deplacement(True, dt)
+              
 
 
             elif ev.type == MSG_PIVOTER_G:
@@ -53,17 +54,25 @@ class CtrlRobot(EvApp):
             elif ev.type == MSG_PIVOTER_D:
                 print(f"pivot d robot :")
                 self.robot.tourner_droite(vitesse)
-                angle_rot, dist_y = self.imu.obtenir_deplacement(True, dt)
-
+              
 
             elif ev.type == MSG_ARRETER:
                 print(f"arret robot :")
                 self.robot.arreter()
-                angle_rot, dist_y = self.imu.obtenir_deplacement(False, dt)
+                
+           
+            elif ev.type == MSG_CAPTURER:
+                    ret,image = self.camera.capturer()
+                    if ret:
+                        nom = datetime.now().strftime("%Y%m%d_%H%M%S")
+                        cv2.imwrite(f"/home/pi/image_rgb/entrainement/{nom}.png", image)
+                        
+                
 
             elif ev.type == MSG_QUITTER:
                 print("quitter")
                 self.quitter()
+                self.camera.arreter()
             elif ev.type == MSG_INIT:
                 self.robot.arreter()  
                 self.robot.reset()  

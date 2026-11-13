@@ -11,6 +11,7 @@ CENTRE_HAUTEUR = TAILLE_HAUTEUR / 2
 APP_CTRL_ROBOT = 8000 
 APP_LIGNE = 8001
 APP_PATROUILLEUR = 8002
+IP = "192.168.137.32"
 #Les nombres indiquent les actions qui peut être transmis vers le robot
 MSG_AVANCER = 1
 MSG_RECULER = 2
@@ -24,6 +25,7 @@ MSG_POSITION = 9
 MSG_INIT = 10
 MSG_SONAR = 11
 MSG_IMU_INFO = 12
+MSG_CAPTURER = 13   
 CHANGEMENTVITESSE = 0.05 #Changement de la vitesse quand on accélère / ralentie
 MAXVITESSE = 1  #Vitesse maximal
 VITESSEINITIAL = 0.5 #Vitesse de départ choisit par nous
@@ -51,7 +53,6 @@ G = 9.80665
 INTERVALLE_IMU = 0.05 # 50ms 
 
 
-#scp -r "C:\Users\maxim\Documents\environnement\labo4\classes" pi@192.168.137.135:/home/pi/
 
 #Tranfer
 #source ~/pyenv/bin/activate
