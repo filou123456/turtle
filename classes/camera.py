@@ -50,7 +50,7 @@ class Camera:
 
         if self.platforme == "linux":
             image = self.picam2.capture_array()
-            image = cv2.cvtColor(image, self.cv2.COLOR_RGB2BGR)
+            image = cv2.cvtColor(image,cv2.COLOR_RGB2BGR)
 
         elif self.platforme == "windows":
             ret, image = self.vcap.read()

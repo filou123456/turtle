@@ -44,7 +44,11 @@ class CtrlRobot(EvApp):
             if ev.type == MSG_AVANCER:
                 print(f"avancer robot :")
                 self.robot.avancer(vitesse)
-              
+            elif ev.type == MSG_RECULER:
+
+                print(f"Reculer")
+
+                self.robot.reculer(vitesse)
 
 
             elif ev.type == MSG_PIVOTER_G:
@@ -62,10 +66,9 @@ class CtrlRobot(EvApp):
                 
            
             elif ev.type == MSG_CAPTURER:
-                    ret,image = self.camera.capturer()
-                    if ret:
-                        nom = datetime.now().strftime("%Y%m%d_%H%M%S")
-                        cv2.imwrite(f"/home/pi/image_rgb/entrainement/{nom}.png", image)
+                    image = self.camera.capturer()
+                    nom = datetime.now().strftime("%Y%m%d_%H%M%S") #Enregistrer avec la date pour ne pas écraser les photos
+                    cv2.imwrite(f"/home/pi/image_rgb/entrainement/{nom}.png", image)
                         
                 
 
