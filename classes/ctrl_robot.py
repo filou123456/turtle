@@ -15,6 +15,7 @@ from ev_app_client_api import gen_ev_externe
 from param import *
 
 from camera import Camera
+from IA import *
 
 class CtrlRobot(EvApp):
     moteurGauche = Moteur(6,5,13)
@@ -22,6 +23,8 @@ class CtrlRobot(EvApp):
     vitesse = VITESSEINITIAL
     camera = Camera(640,480)
     robot = Robot(moteurGauche, moteurDroite,VITESSEINITIAL) #Envoie la vitesse initital
+    ia = IA()
+
 
     def __init__(self, port_no):
         super().__init__(port_no)
@@ -43,7 +46,14 @@ class CtrlRobot(EvApp):
 
             if ev.type == MSG_AVANCER:
                 print(f"avancer robot :")
-                self.robot.avancer(vitesse)
+                image = self.camera.capturer()
+
+                if self.ia.presenceObstacle(image):
+                     self.robot.arreter()
+                else:
+                     self.robot.avancer(vitesse)
+
+
             elif ev.type == MSG_RECULER:
 
                 print(f"Reculer")

@@ -102,11 +102,16 @@ class IA:
     
     def presenceObstacle(self, image):
         #Une méthode qui prend une image en paramètre et qui retourne s’il y a un obstacle ou non dans l’image 
-        return
+
+        outputs = self.modele(image)          # Analyse avec les poids appris
+        prediction = outputs.argmax(1).item() # Choisit la classe
+        return prediction == 0                   # True si obstacle
+        
         
     def sauvegarderModel(self):
         torch.save(self.modele.state_dict(), CHEMIN)
         #Une méthode pour sauvegarder le modèle sur le disque
+
     def chargerModel(self):
         self.modele.load_state_dict(torch.load(CHEMIN))
         # Une méthode pour charger le modèle du disque.
