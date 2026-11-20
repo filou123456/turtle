@@ -52,7 +52,12 @@ HAUTEUR = 240
 G = 9.80665
 INTERVALLE_IMU = 0.05 # 50ms 
 
-
+#Paramètre IA
+IMAGE_DIR = "C:/Users/maxim/Documents/GitHub/turtle/classes/image_rgb" 
+TAILLE_LOT = 32  
+TAILLE_IMG = 128
+NB_CLASSES = 2
+CHEMIN = "./pt_modele/kf2_modele.pt"
 
 #Tranfer
 #source ~/pyenv/bin/activate
