@@ -47,7 +47,7 @@ class IA:
         # Une méthode pour entraîner le modèle à partir d’une banque d’images sur le disque. Utilisez les paramètres d'entraînement suivants :
 
         LEARNING_RATE = 0.001	# Taux d’apprentissage
-        NUM_EPOCHS    = 10	    # Nombre d’itérations d'entraînement
+        NUM_EPOCHS    = 60	    # Nombre d’itérations d'entraînement
 
         # Vérifier la présence d'un processeur graphique GPU
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
