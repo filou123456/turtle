@@ -23,21 +23,21 @@ while not stop_event.is_set():
         
     #Commandes possibles
     if key==ord('q'):
-        message = "Avancer"
-        action = MSG_AVANCER
+        message = "Tourner à gauche"
+        action = MSG_PIVOTER_G
         
 
     if key==ord('s'):
-        message = "Tourner à droite"
-        action = MSG_PIVOTER_D
+        message = "Recul"
+        action = MSG_RECULER
 
     if key==ord('w'):
-        message = "Tourner à gauche"
-        action = MSG_PIVOTER_G
+        message = "Avancer"
+        action = MSG_AVANCER
 
     if key==ord('e'):
-        message = "Reculer"
-        action = MSG_RECULER
+        message = "Tourner à droite"
+        action = MSG_PIVOTER_D
     if key==ord('p'):
         message = "Capture"
         action = MSG_CAPTURER

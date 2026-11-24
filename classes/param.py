@@ -57,7 +57,7 @@ IMAGE_DIR = "C:/Users/maxim/Documents/GitHub/turtle/classes/image_rgb"
 TAILLE_LOT = 32  
 TAILLE_IMG = 128
 NB_CLASSES = 2
-CHEMIN = "C:/Users/maxim/Documents/GitHub/turtle/classes/model/kf2_modele.pt"
+CHEMIN =  "/home/pi/classes/model/kf2_modele.pt"
 
 #Tranfer
 #source ~/pyenv/bin/activate

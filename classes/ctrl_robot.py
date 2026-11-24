@@ -24,6 +24,7 @@ class CtrlRobot(EvApp):
     camera = Camera(640,480)
     robot = Robot(moteurGauche, moteurDroite,VITESSEINITIAL) #Envoie la vitesse initital
     ia = IA()
+    ia.chargerModel()
 
 
     def __init__(self, port_no):
@@ -51,23 +52,25 @@ class CtrlRobot(EvApp):
                 if self.ia.presenceObstacle(image):
                      self.robot.arreter()
                 else:
-                     self.robot.avancer(vitesse)
+                    self.robot.tourner_gauche(vitesse)
+                     
 
 
             elif ev.type == MSG_RECULER:
 
                 print(f"Reculer")
-
-                self.robot.reculer(vitesse)
+                self.robot.tourner_droite(vitesse)
+                
 
 
             elif ev.type == MSG_PIVOTER_G:
                 print(f"pivot g robot :")
-                self.robot.tourner_gauche(vitesse)
+                self.robot.avancer(vitesse)
+                
 
             elif ev.type == MSG_PIVOTER_D:
                 print(f"pivot d robot :")
-                self.robot.tourner_droite(vitesse)
+                self.robot.reculer(vitesse)
               
 
             elif ev.type == MSG_ARRETER:

@@ -33,6 +33,9 @@ class IA:
             transforms.ToTensor()                         # représenter l'image à l'aide de Tensor
         ])
 
+
+    def entrainement(self): 
+        
         # Informe Pytorch du type de donnée et de emplacement
         # Installe un pipeline de transformation
         self.entrainement_dataset = datasets.ImageFolder(os.path.join(IMAGE_DIR, "entrainement"), 
@@ -42,8 +45,6 @@ class IA:
         self.entrainement_loader = DataLoader(self.entrainement_dataset, 
                                         batch_size=TAILLE_LOT, shuffle=True)
     
-
-    def entrainement(self): 
         # Une méthode pour entraîner le modèle à partir d’une banque d’images sur le disque. Utilisez les paramètres d'entraînement suivants :
 
         LEARNING_RATE = 0.001	# Taux d’apprentissage
@@ -103,9 +104,26 @@ class IA:
     def presenceObstacle(self, image):
         #Une méthode qui prend une image en paramètre et qui retourne s’il y a un obstacle ou non dans l’image 
 
-        outputs = self.modele(image)          # Analyse avec les poids appris
-        prediction = outputs.argmax(1).item() # Choisit la classe
-        return prediction == 0                   # True si obstacle
+        labels =  ['arreter', 'continuer']  # en ordre alphabétique
+            
+        # Prétraitement de l’image
+
+        image = cv2.resize(image, (TAILLE_IMG, TAILLE_IMG))
+
+        # image = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB) # Peut-être pas nécessaire
+        
+        # Permutation des axes Hauteur, Largeur, Canal en CHL 
+        # Unsqueeze ajoute une dimension pour le numéro du batch (batch, C, H, L)
+        # Diviser par 255 pour nomaliser les valeurs des couleur BGR
+        image_tensor = torch.tensor(image.transpose(2, 0, 1)).float().unsqueeze(0) / 255.0
+
+        image_tensor = image_tensor.to(device)
+
+        with torch.no_grad():
+            output = modele(image_tensor)
+            _, predicted = torch.max(output, 1) # max de la dimension 1
+        label = labels[predicted.item()] if predicted.item() < len(labels) else "?"
+        print(output, label)
         
         
     def sauvegarderModel(self):
@@ -116,8 +134,3 @@ class IA:
         self.modele.load_state_dict(torch.load(CHEMIN))
         # Une méthode pour charger le modèle du disque.
 
-ia = IA()
-
-ia.entrainement()
-ia.evaluer()
-ia.sauvegarderModel()
