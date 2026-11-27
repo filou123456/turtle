@@ -9,7 +9,7 @@ import numpy as np
 from torchvision import transforms
 from param import *
 
-
+#Labo
 class IA:
 
     def __init__(self):
