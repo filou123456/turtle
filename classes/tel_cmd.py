@@ -38,9 +38,7 @@ while not stop_event.is_set():
     if key==ord('e'):
         message = "Tourner à droite"
         action = MSG_PIVOTER_D
-    if key==ord('p'):
-        message = "Capture"
-        action = MSG_CAPTURER
+
 
     if key==ord('.'):
         message = "Accélération"

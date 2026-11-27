@@ -22,23 +22,25 @@ class Robot:
 
     #Méthodes de déplacement du robot, utilise les contrôles des noteurs 
     def tourner_gauche(self,vitesse):
-            self.__moteurDroite.tourner(vitesse)
-            self.__moteurGauche.reculer(vitesse) 
+        self.__moteurDroite.avancer(vitesse)
+        self.__moteurGauche.avancer(vitesse)
             
 
     def tourner_droite(self,vitesse):
-         self.__moteurGauche.tourner(vitesse)
-         self.__moteurDroite.reculer(vitesse)
+        self.__moteurGauche.reculer(vitesse)
+        self.__moteurDroite.reculer(vitesse)
+
 
     def avancer(self,vitesse):
-        self.__moteurDroite.avancer(vitesse)
-        self.__moteurGauche.avancer(vitesse)
+        self.__moteurDroite.tourner(vitesse)
+        self.__moteurGauche.reculer(vitesse) 
 
         
 
     def reculer(self,vitesse):
-        self.__moteurGauche.reculer(vitesse)
+        self.__moteurGauche.tourner(vitesse)
         self.__moteurDroite.reculer(vitesse)
+
 
     def arreter(self):
         self.__moteurDroite.arret()
