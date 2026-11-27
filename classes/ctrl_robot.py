@@ -25,14 +25,16 @@ class CtrlRobot(EvApp):
     robot = Robot(moteurGauche, moteurDroite,VITESSEINITIAL) #Envoie la vitesse initital
     ia = IA()
     ia.chargerModel()
+    TMO = CHECKTIME
 
 
     def __init__(self, port_no):
-        super().__init__(port_no)
+        super().__init__(port_no, tmo=CtrlRobot.TMO)
 
         self.est_actif = False
         self.dernier_echantillonnage = time.monotonic()
         self.camera.demarrer()
+        self.hasObstacle = False
 
 
     def dispatch_event(self, ev):
@@ -49,7 +51,7 @@ class CtrlRobot(EvApp):
                 print(f"avancer robot :")
                 image = self.camera.capturer()
 
-                if self.ia.presenceObstacle(image):
+                if self.hasObstacle:
                      self.robot.arreter()
                 else:
                     self.robot.tourner_gauche(vitesse)
@@ -92,8 +94,11 @@ class CtrlRobot(EvApp):
             elif ev.type == MSG_INIT:
                 self.robot.arreter()  
                 self.robot.reset()  
-
-       
+            if dt >= self.TMO:
+                self.dernier_echantillonnage = currentTime
+                image = self.camera.capturer()
+                self.hasObstacle = self.ia.presenceObstacle(image)
+            
 
 
     def quitter(self):

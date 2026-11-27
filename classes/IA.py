@@ -102,6 +102,7 @@ class IA:
         print(f"Accuracy: {acc:.2f}%")
     
     def presenceObstacle(self, image):
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         #Une méthode qui prend une image en paramètre et qui retourne s’il y a un obstacle ou non dans l’image 
 
         labels =  ['arreter', 'continuer']  # en ordre alphabétique
@@ -117,14 +118,14 @@ class IA:
         # Diviser par 255 pour nomaliser les valeurs des couleur BGR
         image_tensor = torch.tensor(image.transpose(2, 0, 1)).float().unsqueeze(0) / 255.0
 
-        image_tensor = image_tensor.to(device)
+        image_tensor = image_tensor.to(self.device)
 
         with torch.no_grad():
-            output = modele(image_tensor)
+            output = self.modele(image_tensor)
             _, predicted = torch.max(output, 1) # max de la dimension 1
         label = labels[predicted.item()] if predicted.item() < len(labels) else "?"
         print(output, label)
-        
+        return label == 'arreter'
         
     def sauvegarderModel(self):
         torch.save(self.modele.state_dict(), CHEMIN)
